@@ -1,0 +1,27 @@
+# CUSTOM CONFIG
+# ipv4 only, we don't have ipv6
+inet_protocols = ipv4
+# allow emails sent to this domain to be relayed
+relay_domains = $POSTFIX_RELAY_DOMAINS
+# I assume this will allow all docker-compose network to send email to us
+mynetworks = $POSTFIX_MYNETWORKS
+# deliver to mailtrap, I couldn't figure out how to get it working locally
+# mailtrap credentials
+relayhost = $POSTFIX_RELAYHOST
+smtp_sasl_auth_enable = $POSTFIX_SASL_ENABLE
+smtp_sasl_mechanism_filter = plain
+smtp_sasl_security_options = noanonymous
+smtp_sasl_password_maps = lmdb:/etc/postfix/sasl_passwd
+# allow remapping all addresses
+remote_header_rewrite_domain = static:all
+# where to look up mapping for "TO" addresses, this is user's fake addresses
+# that we want to translate to their real addresses
+recipient_canonical_maps = pgsql:/etc/postfix/postgres_recipient.cf
+# where to look up mapping for "FROM" addresses
+sender_canonical_maps = regexp:/etc/postfix/sender_maps
+# don't include the original address in the header
+enable_original_recipient = no
+# send logging to stdout so we can see it via docker logs
+maillog_file = /dev/stdout
+# don't relay if the destination domain isn't in relay_domains
+smtpd_relay_restrictions = permit_mynetworks reject

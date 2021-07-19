@@ -1,0 +1,5 @@
+hosts = ${POSTGRES_HOST}:${POSTGRES_PORT}
+dbname = $POSTGRES_DBNAME
+user = $POSTGRES_USERNAME
+password = $POSTGRES_PASSWORD
+query = SELECT lti_real_users.email FROM lti_real_users, lti_fake_users WHERE lti_fake_users.email = '%s' AND lti_fake_users.lti_real_user_id = lti_real_users.id
