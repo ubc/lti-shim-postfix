@@ -33,13 +33,7 @@ fi
 # fill in config templates with env vars
 envsubst < /etc/postfix/dist/postgres_recipient.cf.dist > \
            /etc/postfix/postgres_recipient.cf
-echo "postgres:"
-cat /etc/postfix/postgres_recipient.cf
-echo ""
-echo ""
 
 envsubst < /etc/postfix/dist/main.cf.dist > /etc/postfix/main.cf
-echo "main:"
-cat /etc/postfix/main.cf
 
 exec "$@"
